@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="cm.agency.dao.RoleMapper">
+      <select id="GetRoleAlldao" resultType="as_role">
+         select * from as_role LIMIT #{before},#{after}
+      </select>
+      <insert id="addRoledao" parameterType="as_role">
+         insert into  as_role(roleName,creationTime,createdBy,isStart)
+         values(#{roleName},#{creationTime},#{createdBy},#{isStart})
+      </insert>
+      <update id="updRoledao" parameterType="as_role">
+         update as_role set roleName=#{roleName},lastUpdateTime=#{lastUpdateTime},isStart=#{isStart}
+         where id=#{id}
+      </update>
+      <delete id="delRoledao" parameterType="int" >
+         delete from as_role where id=#{id}
+      </delete>
+      <select id="count" resultType="int">
+           select count(*) from as_role
+       </select>
+   </mapper>
+    

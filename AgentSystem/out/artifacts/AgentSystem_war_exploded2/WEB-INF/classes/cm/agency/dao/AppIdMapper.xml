@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cm.agency.dao.AppIdMapper">
+
+    <select id="sletcy" resultType="as_systemconfigEntity">
+        SELECT * from as_systemconfig WHERE configtype=4
+    </select>
+    <update id="">
+        set
+    </update>
+
+    <update id="appInsert">
+        UPDATE  as_systemconfig
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+            <if test="configValue!=null and configValue!=''">configValue=#{configValue} </if>
+        </trim>
+    </update>
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="cm.agency.dao.AntistopAudit">
+		<select id="GetKeyWordsAllDao" resultType="as_Keywords">
+			SELECT as_keywords.* FROM as_keywords
+		</select>
+		<select id="GetKeyWordsDao" resultType="as_Keywords">
+			SELECT as_keywords.* FROM as_keywords
+			<if test="keywords!=null and keywords!=''">
+				where keywords LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+			</if>
+			LIMIT #{before},#{after}
+		</select>
+	<select id="counts" resultType="int" >
+		SELECT count(*) FROM as_keywords
+	</select>
+	<update id="updkeywordsConditionDao">
+		update as_keywords set
+		<if test="prices==1">
+			isUse=1
+		</if>
+		<if test="prices==2">
+			checkStatus=1
+		</if>
+		<if test="prices==3">
+			checkStatus=2
+		</if>
+		<if test="prices==4">
+			checkStatus=3
+		</if>
+		<if test="prices==5">
+			checkStatus=0,isUse=0
+		</if>
+		where id=#{id}
+	</update>
+	<update id="updkeywordsrenew">
+			UPDATE as_keywords SET preRegDatetime = DATE_ADD(preRegDatetime, INTERVAL #{preRegDatetime} YEAR)
+			where id=#{id}
+	</update>
+   </mapper>

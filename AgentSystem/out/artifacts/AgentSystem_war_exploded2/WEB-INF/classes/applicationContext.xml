@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+
+	 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <!-- <property name="url">
+            <value><![CDATA[jdbc:mysql://127.0.0.1:3306/smbms?
+                    useUnicode=true&characterEncoding=utf-8]]></value>
+        </property> -->
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/agentsystemdb?useUnicode=true&amp;characterEncoding=utf-8&amp;&amp;zeroDateTimeBehavior=convertToNull" />
+        <property name="username" value="root" />
+        <property name="password" value="9214" />
+    </bean>
+    <bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<!--  引用数据源组件 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 引用MyBatis配置文件中的配置 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <!-- 配置SQL映射文件信息 -->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:cm/agency/dao/*.xml</value>
+            </list>
+        </property>
+    </bean>
+   <!--  配置DAO -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="basePackage" value="cm.agency.dao"></property>
+    </bean>
+    <!-- 配置业务Bean -->
+     <context:component-scan base-package="cm.agency.service"></context:component-scan>
+    <!-- 配置事务管理器的bean   -->
+    <bean id="dataSourceManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"></property>
+    </bean>
+   <!--  配置事物管理器的规则 -->
+    <tx:advice id="regulation" transaction-manager="dataSourceManager">
+    	<tx:attributes>
+    		<tx:method name="del*" propagation="REQUIRED"/>
+    		<tx:method name="add*" propagation="REQUIRED"/>
+    		<tx:method name="upd*" propagation="REQUIRED"/>
+    	</tx:attributes>
+    </tx:advice>
+   <!--  定义切面 -->
+    <aop:config>
+    	<aop:pointcut expression="execution(* cm.agency.service.*.*(..))" id="pointcut"/>
+    	<aop:advisor advice-ref="regulation" pointcut-ref="pointcut"/>
+    </aop:config>
+</beans>

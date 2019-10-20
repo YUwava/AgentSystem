@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="cm.agency.dao.UserMapper">
+		<select id="GetUserAccountAndPwddao" resultType="as_user">
+			select * from as_user where userCode=#{userCode} and userPassword=#{userPassword}
+		</select>
+		<select id="GetUserroleAlldao" resultType="as_user">
+			select * from as_user
+		</select>
+		<select id="GetRolesAlldao" resultType="as_role">
+         	select * from as_role
+      	</select>
+		<select id="GetUserconditionAlldao" resultType="as_user">
+			 select * from as_user, as_role where
+			as_user.roleId=as_role.id
+			LIMIT #{before},#{after}
+		</select>
+
+		<select id="counts" resultType="int">
+           select count(*) from as_user, as_role
+			where as_user.roleId=as_role.id
+       </select>
+
+
+	<select id="GetUserconditionAllingdao" resultType="as_user">
+		select * from as_user, as_role where
+		<if test="userName!=null and userName!=''">
+			userName LIKE CONCAT(CONCAT('%', #{userName}),'%') and
+		</if>
+		<if test="roleId>0 and roleId!=null">
+			as_user.roleId=#{roleId} and
+		</if>
+		<if test="isStart>0 and isStart!=null">
+			as_user.isStart=#{isStart} and
+		</if>
+		as_user.roleId=as_role.id
+		LIMIT #{before},#{after}
+	</select>
+
+	<select id="counting" resultType="int">
+		select count(*) from as_user, as_role
+		where as_user.roleId=as_role.id
+		<if test="isStart>0">
+			and as_user.isStart=#{isStart} and
+		</if>
+		<if test="userName!=null and userName!=''">
+			userName LIKE CONCAT(CONCAT('%', #{userName}),'%') and
+		</if>
+		<if test="roleId>0">
+			as_user.roleId=#{roleId}
+		</if>
+	</select>
+		<insert id="addUserdao" parameterType="as_user">
+			insert into as_user(userCode,userName,userPassword,creationTime,createdBy,isStart,roleId)
+			values (#{userCode},#{userName},#{userPassword},#{creationTime},#{createdBy},#{isStart},#{roleId})
+		</insert>
+	<delete id="delUserdao" parameterType="int">
+		delete from as_user
+		where id=#{id}
+	</delete>
+
+
+	<update id="updUserdao" parameterType="as_user">
+		update as_user set
+			userCode=#{userCode},
+			userName=#{userName},
+			userPassword=#{userPassword},
+			userPassword=#{userPassword},
+			lastUpdateTime=#{lastUpdateTime},
+			roleId=#{roleId},
+			isStart=#{isStart}
+		where id=#{id}
+	</update>
+	<select id="GetoldDao" resultType="int">
+		select count(*) from as_user where id=#{id} and userPassword=#{pwd};
+	</select>
+	<update id="updPwdDao">
+		update as_user set userPassword=#{pwd} where id=#{id}
+	</update>
+   </mapper>
+    

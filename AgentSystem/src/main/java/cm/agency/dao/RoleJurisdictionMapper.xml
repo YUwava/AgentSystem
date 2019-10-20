@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="cm.agency.dao.RoleJurisdictionMapper">
+		<select id="GetRoleDao" resultType="as_role">
+			select * from as_role
+		</select>
+		<select id="GetRoleJurisdictionAllingdao" resultType="as_role_premission">
+			select as_role_premission.*,as_role.*,as_function.* from as_role_premission,as_role,as_function
+			where as_role_premission.roleId=#{roleId} and as_role_premission.roleId=as_role.id
+			and as_role_premission.functionId=as_function.id
+			LIMIT #{before},#{after}
+		</select>
+		<select id="counts" resultType="int">
+			select count(*) from as_role_premission,as_role,as_function
+			where as_role_premission.roleId=#{roleId} and as_role_premission.roleId=as_role.id
+			and as_role_premission.functionId=as_function.id
+		</select>
+		<update id="updRoleJurisdictioniddao" parameterType="int">
+			update as_role_premission set isStart=#{isStart}
+			where id=#{id}
+		</update>
+   </mapper>
+    

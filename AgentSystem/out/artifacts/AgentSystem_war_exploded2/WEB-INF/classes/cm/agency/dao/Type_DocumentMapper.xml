@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="cm.agency.dao.Type_DocumentMapper">
+
+   <select id="selectDocumentMapper" resultType="as_systemconfigEntity">
+      SELECT * from as_systemconfig WHERE configType=6
+   </select>
+
+   <insert id="AddDocument">
+         INSERT INTO as_systemconfig(configType,configTypeName,isStart)
+        VALUE(#{configType},#{configTypeName},#{isStart})
+   </insert>
+
+    <update id="updatDocument" parameterType="as_systemconfigEntity">
+        UPDATE as_systemconfig
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+            <if test="configTypeName!=null and configTypeName!=''">configTypeName=#{configTypeName},</if>
+            <if test="isStart!=null and isStart!=''">isStart=#{isStart},</if>
+        </trim>
+    </update>
+    <delete id="deleteDocument" parameterType="as_systemconfigEntity">
+       DELETE  from as_systemconfig WHERE id=#{id}
+    </delete>
+   </mapper>
+    

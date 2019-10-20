@@ -1,0 +1,90 @@
+body {
+    margin: 0px;
+    background-image: none;
+    position: static;
+    left: auto;
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+}
+#bkcolor{
+    width: 700px;
+    height: 290px;
+    background-color: #e2e2e2;
+    opacity:0.4;
+    position:absolute;
+    margin-top: 220px;
+    margin-left: 500px;
+}
+#bk{
+    z-index: 0;
+    position:absolute;
+    margin: auto;
+}
+#bkcolor01{
+    opacity: 100;
+}
+.container{
+    width: 420px;
+    height: 280px;
+    min-height: 300px;
+    max-height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    padding: 20px;
+    z-index: 130;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 3px 18px rgba(100, 0, 0, .5);
+    font-size: 16px;
+}
+.close{
+    background-color: white;
+    border: none;
+    font-size: 18px;
+    margin-left: 410px;
+    margin-top: -10px;
+}
+
+.layui-input{
+    border-radius: 5px;
+    width: 300px;
+    height: 40px;
+    font-size: 15px;
+}
+.layui-form-item{
+    margin-left: -20px;
+}
+#logoid{
+    margin-top: -16px;
+    padding-left:150px;
+    padding-bottom: 15px;
+}
+.layui-btn{
+    margin-left: -50px;
+    border-radius: 5px;
+    width: 350px;
+    height: 40px;
+    font-size: 15px;
+}
+.verity{
+    width: 120px;
+}
+.font-set{
+    font-size: 13px;
+    text-decoration: none;
+    margin-left: 40px;
+}
+.font-sets{
+    font-size: 13px;
+    text-decoration: none;
+    margin-left: 230px;
+}
+a:hover{
+    text-decoration: underline;
+}

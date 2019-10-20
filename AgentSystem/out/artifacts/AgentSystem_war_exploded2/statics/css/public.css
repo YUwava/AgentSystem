@@ -1,0 +1,19 @@
+
+.form_finance .layui-input-block{
+    width: 20%;
+}
+.form_finance_text .layui-input-block{
+    width: 40%;
+}
+.layui-table-cell {
+    overflow: visible !important;
+}
+.layui-table-box {
+    overflow: visible;
+}
+.layui-table-body {
+    overflow: visible;
+}
+yui-layer-page .layui-layer-content {
+    overflow: visible !important;
+}

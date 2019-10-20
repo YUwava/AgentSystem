@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="cm.agency.dao.PreferentialMapper">
+
+   <select id="SelectPreferent" resultType="as_systemconfigEntity">
+      SELECT * from as_systemconfig WHERE configType=7
+   </select>
+
+   <insert id="addPreferent" parameterType="as_systemconfigEntity">
+    INSERT into as_systemconfig(configType,configTypeName,configTypeValue,configValue,isStart)
+    VALUES(#{configType},#{configTypeName},#{configTypeValue},#{configValue},#{isStart})
+   </insert>
+
+    <update id="updatPrefrent">
+        UPDATE  as_systemconfig
+        <trim prefix="set" suffixOverrides="," suffix="where id=#{id}">
+            <if test="configTypeName!=null and configTypeName!=''">configTypeName=#{configTypeName},</if>
+            <if test="configValue!=null and configValue!=''">configValue=#{configValue},</if>
+            <if test="configTypeValue!=null and configTypeValue!=''">configTypeValue=#{configTypeValue},</if>
+            <if test="isStart!=null and isStart!=''">isStart=#{isStart},</if>
+        </trim>
+    </update>
+    <delete id="dletet" parameterType="as_systemconfigEntity">
+       DELETE  from as_systemconfig WHERE id=#{id}
+    </delete>
+   </mapper>
+    
